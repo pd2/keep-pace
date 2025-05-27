@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- 
+      This is an HTML comment
+      You can write text in a comment and the content won't be visible in the page
+    -->
+    
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-S4N2QYQTJS"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-S4N2QYQTJS');
+  </script>
+    
+    <meta charset="utf-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1" >
+    
+    <link rel="icon" href="https://cdn.glitch.global/530716e8-d2b9-4a3d-b6f4-434a3d4fe819/Carbon_footprint_icon.png" >
+    <link rel="manifest" href="/manifest.json" >
+
+    <!--
+      This is the page head - it contains info the browser uses
+      Like the title, which appears on the browser tab but not inside the page
+      Further down you'll see the content that displays in the page
+    -->
+    <title>Keep PACE!</title>
+
+    <!-- The website stylesheet -->
+    <link rel="stylesheet" href="/style.css" >
+
+    <!-- The website JavaScript file -->
+    <!-- <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.2.0/dist/confetti.browser.min.js"></script>
+    <script src="/script.js" defer></script>
+    
+  </head>
+  
+  <body>
+    <h1> Keep PACE! </h1>
+  <p id="info">Guess the action that would reduce your carbon footprint</p>
+  <main id="app" @keyup="handleKeyPress">
+    <div class="container">
+      <p id="quote" :class="{ 'strike': strikeout, 'highlight': puzzleComplete }">
+        <medium > Score: 
+          <redit> 
+          {{ score }}
+          </redit>
+          </medium>
+        <br>
+          <medium > 
+            Clue: {{ lead }}
+          </medium>
+        <br>
+        <span v-for="word in splitQuote">
+          <template v-for="letter in word">{{ isRevealed(letter) }}</template>
+        </span>
+        <br>
+        <br>
+        <small > <!-- v-if="gameOver" -->
+          <span>
+          Category : {{ category }}
+          </span>
+        <br>
+          <span>
+            Impact : <redit> {{ points }} </redit> kg CO<sub>2</sub> reduction
+          </span>
+        </small>
+      </p>
+
+      <div class="status">
+        <h2>Strikes:</h2>
+        <ul class="status">
+          <li v-for="strike in strikes">{{ strike.icon }}</li>
+        </ul>
+      </div>
+
+      <div id="button-board">
+        <button
+          v-for="letter in letters"
+          @click="guess(letter)"
+          :class="{'strike': badGuesses.includes(letter), 'highlight': guesses.includes(letter)}"
+          :disabled="guesses.includes(letter) || gameOver"
+        >
+          <span class="letter" :class="{'riser': guesses.includes(letter)}">{{ letter }}</span>
+          <span class="background"></span>
+        </button>
+      </div>
+
+      <div class="status">
+        <p>{{ message }}</p>
+      </div>
+      
+      <div>
+        
+        <button id="new-game" ref="newGameBtn" @click="newGame" :class="{'highlight': gameOver}">New game</button>
+        <button v-if="share" class="share" onclick="ShareIt()" ref="shareBtn"> Share </button>
+        
+      </div>
+
+    </div>
+    <div id="settings">
+    <span  style="white-space: nowrap">
+      Progression:
+    <input type="radio" id="rand" name="is_rand" value="1"><label for="rand"> Random </label>
+    <input type="radio" id="seq"  name="is_rand" value="0" checked="checked"><label for="seq"> Sequential </label>
+    </span>
+    </div>
+
+  </main>
+    <script>
+      if ("serviceWorker" in navigator) {
+        window.addEventListener("load", function() {
+          navigator.serviceWorker
+            .register("/serviceWorker.js")
+            .then(res => console.log("service worker registered"))
+            .catch(err => console.log("service worker not registered", err))
+        })
+      }
+    </script>
+  </body>
+    <footer class="footer">
+    <span style="white-space: nowrap"> &copy; 2024 <a href="https://www.pradeepd.com/hobbies/apps">Pradeep D</a>, <a href="https://www.iseek.page">iSeek</a>. Code: Josh Collinsworth; Supported by: <a href="https://pacemanningtree.org.uk">PACE Manningtree</a> </span>
+    <br> <a href="https://www.buymeacoffee.com/pradeepde">Buy me a coffee</a>
+    </footer>
+</html>
