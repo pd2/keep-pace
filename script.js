@@ -225,7 +225,7 @@ let copyText;
 
 function ShareIt() {
   
-  let linkURL = "https://keep-pace.glitch.me/"; // window.location.href;//
+  let linkURL = "https://pd2.github.io/keep-pace/"; // window.location.href;//
   
   copyText = `#Keep-PACE I learnt how ${app.text} can reduce my carbon footprint in ${Math.round(elapsedTime/1000)} sec at ${linkURL}`;
   
