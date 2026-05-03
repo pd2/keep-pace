@@ -72,7 +72,7 @@
     "points": "800"
   },
   {
-    "text": "swithcing to a green energy provider",
+    "text": "switching to a green energy provider",
     "lead": "use renewable energy",
     "category": "Energy",
     "points": "800"
